@@ -1160,7 +1160,7 @@ Strategy::get_normal_dash_power( const WorldModel & wm )
     const double my_inc
         = wm.self().playerType().staminaIncMax()
         * wm.self().recovery();
-    int role =  wm.self().unum();
+    int role =  Strategy::i().roleNumber(wm.self().unum());
     if ( wm.ourDefenseLineX() > wm.self().pos().x
          && wm.ball().pos().x < wm.ourDefenseLineX() + 20.0 )
     {
