@@ -26,6 +26,7 @@
 #include <config.h>
 #endif
 
+#include <cstring>
 #include "sample_field_evaluator.h"
 
 #include "field_analyzer.h"
@@ -255,11 +256,47 @@ evaluate_state( const PredictState & state, const std::vector<ActionStatePair> &
         
     }
     
+    double point2 = 1000.0;
+    double ball_posX = state.ball().pos().x,
+                ball_posabsY = state.ball().pos().absY();
+    int weight = 1;
+    int role = state.self().unum();
+    double offsideline = state.offsideLineX();
+
     if (path.empty())
     {
         return -1.0e+7;
     }
+
+    if(path.size() > 0)
+    {
+        const CooperativeAction &a = path[0].action();
+        switch (a.category())
+        {
+        case CooperativeAction::Hold:
+            weight = 1.05;
+            break;
+        case CooperativeAction::Dribble:
+            if (ball_posX > 35 && ball_posX < 45 && (role == 9 || role == 10)
+                && ball_posabsY < 18
+                && strcmp(a.description(), "SelfPass") == 0)
+            {
+                weight = 2.0;
+            }
+            break;
+        case CooperativeAction::Pass:
+            if(ball_posX > 10 && ball_posX < 35 && (role == 9 || role == 10)
+                && role == 7 && (a.targetPlayerUnum() == 9 || a.targetPlayerUnum() == 10))
+            {
+                weight == 2.5;
+            }
+            break;
+        default:
+            break;
+        }
+    }
     
+    point += point2*weight;
     point += getLengthPenalty(state, path);
     return point;
 }
