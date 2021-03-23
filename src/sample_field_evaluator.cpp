@@ -281,7 +281,7 @@ evaluate_state( const PredictState & state, const std::vector<ActionStatePair> &
                 && ball_posabsY < 18
                 && strcmp(a.description(), "SelfPass") == 0)
             {
-                weight = 2.0;
+                weight = 2.5;
             }
             break;
         case CooperativeAction::Pass:
@@ -290,6 +290,13 @@ evaluate_state( const PredictState & state, const std::vector<ActionStatePair> &
             {
                 weight == 2.5;
             }
+            else if (ball_posX > 40 && ball_posX < 52.5 && ball_posabsY < 15
+                         && (role == 9 || role == 10)
+                    && (a.targetPlayerUnum()== 11))
+            {
+                weight = 3.0;
+            }
+            
             break;
         default:
             break;
