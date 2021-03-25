@@ -80,9 +80,12 @@ Bhv_BasicMove::execute( PlayerAgent * agent )
     if ( role >= 6 && role <= 8 && wm.ball().pos().x > -30.0
     && wm.self().pos().x < 10.0 )
         pressing = 7;
-    if ( fabs(wm.ball().pos().y) > 22.0 && wm.ball().pos().x < 0.0
-    && wm.ball().pos().x > -36.5 && (role == 4 || role == 5) )
+    if ( wm.ball().pos().absY() > 22.0 && wm.ball().pos().x < -9.0
+    && wm.ball().pos().x > -40.5 && (role == 4 || role == 5) )
         pressing = 23;
+    if( wm.ball().pos().x > 45 && wm.ball().pos().x < 50 && (role == 7 || role == 8 )&&
+            wm.existKickableTeammate())
+        pressing = 25;
 
     if ( ! wm.existKickableTeammate()
          && ( self_min <= 3

@@ -1214,13 +1214,13 @@ Strategy::get_normal_dash_power( const WorldModel & wm )
     {
         dash_power = ServerParam::i().maxDashPower();
     }
-    else if (wm.ball().pos().x < 10
+    else if (wm.ball().pos().x < -20
                 && (role == 4 || role == 5 || role == 2 ||role == 3
                 ))
     {
         dash_power = ServerParam::i().maxDashPower();
     }
-    else if (wm.ball().pos().x < -10.0
+    else if (wm.ball().pos().x < -5.0
                 && (role== 6 || role == 7 || role == 8))
     {
         dash_power = ServerParam::i().maxDashPower();
