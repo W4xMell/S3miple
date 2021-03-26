@@ -277,8 +277,8 @@ evaluate_state( const PredictState & state, const std::vector<ActionStatePair> &
             weight = 1.05;
             break;
         case CooperativeAction::Dribble:
-            if (ball_posX > 35 && ball_posX < 45 && (role == 9 || role == 10)
-                && ball_posabsY < 18
+            if (ball_posX > 15 && ball_posX < 45 && (role == 9 || role == 10)
+                && ball_posabsY > 18
                 && strcmp(a.description(), "SelfPass") == 0)
             {
                 weight = 2.5;
@@ -290,9 +290,9 @@ evaluate_state( const PredictState & state, const std::vector<ActionStatePair> &
             {
                 weight == 2.5;
             }
-            else if (ball_posX > 40 && ball_posX < 52.5 && ball_posabsY < 15
+            else if (ball_posX > 40 && ball_posX < 52.5 && ball_posabsY < 22
                          && (role == 9 || role == 10)
-                    && (a.targetPlayerUnum()== 11))
+                    && (a.targetPlayerUnum()== 7 || a.targetPlayerUnum() == 8))
             {
                 weight = 3.0;
             }

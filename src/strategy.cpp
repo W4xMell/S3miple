@@ -1160,7 +1160,7 @@ Strategy::get_normal_dash_power( const WorldModel & wm )
     const double my_inc
         = wm.self().playerType().staminaIncMax()
         * wm.self().recovery();
-    int role =  Strategy::i().roleNumber(wm.self().unum());
+    int role =  wm.self().unum();
     if ( wm.ourDefenseLineX() > wm.self().pos().x
          && wm.ball().pos().x < wm.ourDefenseLineX() + 20.0 )
     {
@@ -1214,7 +1214,8 @@ Strategy::get_normal_dash_power( const WorldModel & wm )
     {
         dash_power = ServerParam::i().maxDashPower();
     }
-    else if (wm.ball().pos().x < -20
+
+    else if (wm.ball().pos().x < -30
                 && (role == 4 || role == 5 || role == 2 ||role == 3
                 ))
     {
@@ -1225,11 +1226,18 @@ Strategy::get_normal_dash_power( const WorldModel & wm )
     {
         dash_power = ServerParam::i().maxDashPower();
     }
+    else if( wm.ball().pos().x > 35 && wm.ball().pos().x < 50 && (role >=7 && role <= 11 )&&
+            wm.existKickableTeammate())
+    {
+        dash_power = ServerParam::i().maxDashPower();
+    }
+    
     else if ( wm.ball().pos().x > 36.0
             && wm.self().pos().x > 36.0
             && mate_min < opp_min - 4
                 )
-            dash_power = ServerParam::i().maxDashPower();
+        dash_power = ServerParam::i().maxDashPower();
+    
     
     // normal
     else
