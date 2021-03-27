@@ -1258,11 +1258,18 @@ StrictCheckPassGenerator::createPassCommon( const WorldModel & wm,
                                                 receive_point,
                                                 step + ( kick_count - 1 ) + 5,
                                                 &opponent );
+        int risk = 0;
 
+        if ( wm.ball().pos().x < wm.offsideLineX()
+             && receive_point.x >  wm.offsideLineX() + 3.0
+             && wm.offsideLineX() - receiver.player_->pos().x < 5.0 )
+	{
+	                risk = 2;
+	}
         bool failed = false;
         if ( M_pass_type == 'T' )
         {
-            if ( o_step <= step )
+            if ( o_step + risk <= step )
             {
 #ifdef DEBUG_THROUGH_PASS
                  dlog.addText( Logger::PASS,
@@ -1292,7 +1299,7 @@ StrictCheckPassGenerator::createPassCommon( const WorldModel & wm,
         }
         else
         {
-            if ( o_step <= step + ( kick_count - 1 ) )
+            if ( o_step  + risk <= step + ( kick_count - 1 ) )
             {
                 failed = true;
             }

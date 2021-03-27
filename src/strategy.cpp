@@ -1177,6 +1177,33 @@ Strategy::get_normal_dash_power( const WorldModel & wm )
         dlog.addText( Logger::TEAM,
                       __FILE__": (get_normal_dash_power) recovering" );
     }
+    else if(wm.ball().pos().x > 0
+                && wm.self().pos().x < wm.offsideLineX()
+                && fabs(wm.ball().pos().x - wm.self().pos().x) < 25.0
+                )
+    {
+        dash_power = ServerParam::i().maxDashPower();
+    }
+    else if (wm.ball().pos().x < 5
+                && (role <= 5 && role >= 2))
+    {
+        dash_power = ServerParam::i().maxDashPower();
+    }
+    else if (wm.ball().pos().x < -5.0
+                && (role== 6 || role == 7 || role == 8))
+    {
+        dash_power = ServerParam::i().maxDashPower();
+    }
+    else if ( wm.ball().pos().x > 36.0
+            && wm.self().pos().x > 36.0
+            && mate_min < opp_min - 4
+                )
+            dash_power = ServerParam::i().maxDashPower();
+    else if( wm.ball().pos().x > 35 && wm.ball().pos().x < 50 && (role == 7 || role == 8 )&&
+            wm.existKickableTeammate())
+    {
+            dash_power = ServerParam::i().maxDashPower();
+    }
     // exist kickable teammate
     else if ( wm.existKickableTeammate()
               && wm.ball().distFromSelf() < 20.0 )
@@ -1207,30 +1234,6 @@ Strategy::get_normal_dash_power( const WorldModel & wm )
                       __FILE__": (get_normal_dash_power) opponent ball dash_power=%.1f",
                       dash_power );
     }
-    else if(wm.ball().pos().x > 0
-                && wm.self().pos().x < wm.offsideLineX()
-                && fabs(wm.ball().pos().x - wm.self().pos().x) < 25.0
-                )
-    {
-        dash_power = ServerParam::i().maxDashPower();
-    }
-    else if (wm.ball().pos().x < -20
-                && (role == 4 || role == 5 || role == 2 ||role == 3
-                ))
-    {
-        dash_power = ServerParam::i().maxDashPower();
-    }
-    else if (wm.ball().pos().x < -5.0
-                && (role== 6 || role == 7 || role == 8))
-    {
-        dash_power = ServerParam::i().maxDashPower();
-    }
-    else if ( wm.ball().pos().x > 36.0
-            && wm.self().pos().x > 36.0
-            && mate_min < opp_min - 4
-                )
-            dash_power = ServerParam::i().maxDashPower();
-    
     // normal
     else
     {
