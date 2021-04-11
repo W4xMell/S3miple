@@ -76,6 +76,11 @@ Bhv_BasicMove::execute( PlayerAgent * agent )
     const int opp_min = wm.interceptTable()->opponentReachCycle();
     int role =  Strategy::i().roleNumber(wm.self().unum());
 
+    bool _200ok = false;
+
+    if (wm.opponentTeamName().find("200_OK") != std::string::npos)
+	_200ok = true;
+
     int pressing = 13;
     if ( role >= 6 && role <= 8 && wm.ball().pos().x > -30.0
     && wm.self().pos().x < 10.0 )
@@ -83,6 +88,12 @@ Bhv_BasicMove::execute( PlayerAgent * agent )
     if ( wm.ball().pos().absY() > 22.0 && wm.ball().pos().x < -9.0
     && wm.ball().pos().x > -40.5 && (role == 4 || role == 5) )
         pressing = 23;
+    
+    if (_200ok)
+    {
+        pressing = 7;
+    }
+    
     if (wm.ball().pos().x > 35 && wm.ball().pos().x < 45
         && role >= 7)
     {

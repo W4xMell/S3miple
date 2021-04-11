@@ -471,6 +471,15 @@ Bhv_SetPlay::is_kicker( const PlayerAgent * agent )
     const AbstractPlayerObject * kicker = static_cast< AbstractPlayerObject* >( 0 );
     const AbstractPlayerObject * second_kicker = static_cast< AbstractPlayerObject* >( 0 );
 
+    int t;
+
+    if (kicker_unum == 9 || kicker_unum == 10)
+    {
+        t = kicker_unum;
+        kicker_unum = second_kicker_unum;
+        second_kicker_unum = t;
+    }
+    
     if ( kicker_unum != 0 )
     {
         kicker = wm.ourPlayer( kicker_unum );
@@ -480,6 +489,7 @@ Bhv_SetPlay::is_kicker( const PlayerAgent * agent )
     {
         second_kicker = wm.ourPlayer( second_kicker_unum );
     }
+
 
     if ( ! kicker )
     {
